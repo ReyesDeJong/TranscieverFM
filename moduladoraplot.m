@@ -15,7 +15,7 @@ subplot1 = subplot(2,1,1,'Parent',figure1,'YGrid','on',...
     'XTickLabel',{'0','1ms','2ms','3ms','4ms','5ms','6ms','7ms','8ms','9ms','10ms'},...
     'XGrid','on');
 %% Uncomment the following line to preserve the X-limits of the axes
-% xlim(subplot1,[0 0.01]);
+ xlim(subplot1,[0 0.01]);
 box(subplot1,'on');
 hold(subplot1,'all');
 

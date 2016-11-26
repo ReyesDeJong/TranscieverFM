@@ -77,8 +77,9 @@ modulacion=B*cos(2*pi*fc*t+ (2*pi*dev3)/max(max(signal)) * triangular);
 ruido = awgn(modulacion,15);
 ruido2 = awgn(modulacion,30);
 len = size(ruido,1);
+fmdemod(
 demoud(t,z);
-as=fmdemod(ruido,fc,Fs,dev3);
+as=fmdemod(ruido,fc,Fs,dev3)
 hold on
 plot(t,signal)
 figure
