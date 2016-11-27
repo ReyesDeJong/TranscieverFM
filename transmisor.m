@@ -1,4 +1,7 @@
-                                                       %% parte uno
+close all
+clear all
+clc
+%% parte uno
 %tiempo
 A = 0.75;
 fm = 500;
@@ -67,19 +70,65 @@ ruido4 = awgn(modulacion2,30);
 modulacionruido(t,ruido3,ruido4);
 
                                                         %% parte cuatro
+% as=fmdemod(ruido2,fc,Fs,fDev);
+% plot(t,as);
 
-yq = hilbert(ruido).*exp(-j*2*pi*fc*t);
-z = (1/(2*pi*fDev))*[zeros(1,size(yq',2)); diff(unwrap(angle(yq')))*Fs];
-demoud(t,z);
                                                         %% parte cuatro y medio
-dev3=3000;
-modulacion=B*cos(2*pi*fc*t+ (2*pi*dev3)/max(max(signal)) * triangular);
+dev3=10000;
+modulacion=B*cos(2*pi*fc*t+ (2*pi*fDev) * triangular);
 ruido = awgn(modulacion,15);
 ruido2 = awgn(modulacion,30);
-len = size(ruido,1);
-demoud(t,z);
-as=fmdemod(ruido,fc,Fs,dev3);
-hold on
-plot(t,signal)
 figure
-plot(t,as)
+as=fmdemod(ruido,fc,Fs,dev3);
+plot(t,as);
+hold on
+plot(t,signal,'r')
+
+
+
+%% modulacion buena
+                                                       %% parte dos
+
+B=1.5;
+fc=10000;
+fDev=7500;
+%señal modulada
+
+modulacion=B*cos(2*pi*fc*t+ (2*pi*fDev)* triangular);
+
+%furier de modulacion
+fourierm=fft(modulacion);
+P2m = abs(fourierm/L);
+P1m = P2m(1:L/2+1);
+P1m(2:end-1) = 2*P1m(2:end-1);
+
+figure
+subplot(2,1,1)
+plot(t,modulacion)
+hold on
+plot(t,signal,'black')
+title('Señal modulada con indice de modulación 0.75.');
+ylabel('Amplitud [V]');
+xlabel('Tiempo [s]');
+subplot(2,1,2)
+plot(f,P1m);
+ylabel('Amplitud ');
+xlabel('Frecuencia [Hz]');
+figure
+subplot(2,1,1)
+ruido = awgn(modulacion,15);
+plot(t,ruido);
+hold on 
+plot(t,signal,'r');
+title('Señal modulada con indice de modulación 0.75 y 15 SNR.');
+ylabel('Amplitud [V]');
+xlabel('Tiempo [s]');
+subplot(2,1,2)
+as=fmdemod(ruido,fc,Fs,dev3);
+plot(t,as);
+hold on
+plot(t,signal,'r')
+title('Señal demodulada con indice de modulación 0.75 y 15 SNR.');
+ylabel('Amplitud [V]');
+xlabel('Tiempo [s]');
+
